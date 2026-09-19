@@ -759,6 +759,18 @@ export default function App() {
                   {selectedPatient.city || 'Not specified'}
                 </div>
               </div>
+              <div className="col-md-6 mb-3">
+                <strong>Created At</strong>
+                <div>
+                  {selectedPatient.createdAt || 'Not specified'}
+                </div>
+              </div>
+              <div className="col-md-6 mb-3">
+                <strong>Updated At</strong>
+                <div>
+                  {selectedPatient.updatedAt || 'Not specified'}
+                </div>
+              </div>
 
             </div>
 
