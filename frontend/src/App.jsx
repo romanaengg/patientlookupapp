@@ -600,7 +600,16 @@ const searchPatients =async () => {
 
       )}
 
-      {/* Search Bar */ }
+    
+      {/* =================================================
+          PATIENT LIST
+          ================================================= */}
+
+      {view === 'list' && !loading && (
+
+
+        <div>
+       {/* Search Bar */ }
       <div className="card  mb-4">  
         <div className="card-body">
           <h5 className="card-title">Search by First Name:</h5>
@@ -632,14 +641,6 @@ const searchPatients =async () => {
         </div>
         </div>
       </div>  
-
-      {/* =================================================
-          PATIENT LIST
-          ================================================= */}
-
-      {view === 'list' && !loading && (
-
-        <div>
 
           <div className="d-flex justify-content-between align-items-center mb-3">
 
