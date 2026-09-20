@@ -1,5 +1,6 @@
 package com.testing.patientlookup.service.impl;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -29,15 +30,8 @@ public class PatientServiceImpl implements PatientService {
     }
 
     @Override
-    public String getPatientByFname(String firstName) {
-        patientRepository.findAll().stream()
-                .filter(patient -> patient.getFirstName().equalsIgnoreCase(firstName))
-                .findFirst()
-                .orElseThrow(() ->
-                        new RuntimeException(
-                                "Patient not found with first name: " + firstName));
-
-        return "Patient found successfully.";
+    public List<Patient> getPatientByFname(String firstName) {
+        return patientRepository.findByFirstNameIgnoreCase(firstName);
     }
 
     @Override
@@ -62,8 +56,9 @@ public class PatientServiceImpl implements PatientService {
         existingPatient.setLastName(patient.getLastName());
         existingPatient.setDateOfBirth(patient.getDateOfBirth());
         existingPatient.setGender(patient.getGender());
-      
         existingPatient.setCity(patient.getCity());
+        existingPatient.setUpdatedAt(LocalDateTime.now());
+        
     
 
         // Save the existing entity

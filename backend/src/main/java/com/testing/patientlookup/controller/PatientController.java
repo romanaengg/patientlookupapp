@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.testing.patientlookup.model.Patient;
@@ -33,7 +34,16 @@ public class PatientController {
         return patientService.getAllPatients();
     }
 
-    // GET patient by ID
+  
+    // GET patient by first name
+    @GetMapping("/search")  
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
+    public List<Patient> getPatientByFname(
+            @RequestParam("firstName") String firstName) {
+
+        return patientService.getPatientByFname(firstName);
+    }
+      // GET patient by ID
     @GetMapping("/{patientId}")
     @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     public Patient getPatientById(

@@ -146,9 +146,41 @@ export default function App() {
       setLoading(false);
     }
   };
+// -----------------------------
+  // Fetch individual patient by first name
+  // -----------------------------
+  const [searchName, setSearchName] = useState('');
+const searchPatients =async () => {
+  if(!searchName.trim()) {
+    fetchPatients();
+    return;
+  }
+  
+  setLoading(true);
+  setError('');
+  try {
+    const response = await fetch(`${API_BASE_URL}/search?firstName=${encodeURIComponent(searchName)}`, {
+      headers: {
+        'Authorization': getAuthHeader()
+      }
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to search patients.');
+    }
+    
+    const data = await response.json();
+    setPatients(data);
+  } catch (err) {
+    setError(err.message);
+  } finally {
+    setLoading(false);
+  }
+};
+
 
   // -----------------------------
-  // Fetch individual patient
+  // Fetch individual patient by ID
   // -----------------------------
   const viewPatientDetails = async (id) => {
 
@@ -567,6 +599,39 @@ export default function App() {
         </div>
 
       )}
+
+      {/* Search Bar */ }
+      <div className="card  mb-4">  
+        <div className="card-body">
+          <h5 className="card-title">Search by First Name:</h5>
+          <div className ="row g-2">
+          <div className="col-md-8">
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Enter first name"
+              value={searchName}
+              onChange={(e) => setSearchName(e.target.value)}
+              onkeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  e.preventDefault();
+                  searchPatients();
+                }
+              }}
+            />
+          </div>
+            
+          <div className="col-auto">
+            <button
+              className="btn btn-outline-primary"
+              onClick={searchPatients}
+            >
+              Search
+            </button>
+          </div>
+        </div>
+        </div>
+      </div>  
 
       {/* =================================================
           PATIENT LIST
